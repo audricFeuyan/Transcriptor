@@ -1,6 +1,6 @@
 
 1- Convert your audio file in .wav extension with ffmpeg for instance and copy it into input directory
-ffmpeg command: ffmpeg -i input_audio_file.extension input.wav
+ffmpeg command: ``ffmpeg -i input_audio_file.extension input.wav``
 
 2- install speech recognition package
 ``pip3 install speechrecognition``
