@@ -5,8 +5,8 @@ from pydub import AudioSegment
 from pydub.silence import split_on_silence
 
 audio_transcript_file = os.listdir("./input")[0]
-result_text_file = "./output/result.txt"
-folder_name = "audio-chunks-8"
+result_text_file = "./output/result-3.txt"
+folder_name = "audio-chunks"
 
 #os.system("ffmpeg -i {} input.wav".format(audio_transcript_file))
 r = sr.Recognizer()
@@ -19,16 +19,17 @@ def get_large_audio_transcription(path):
     and apply speech recognition on each of these chunks
     """
     # open the audio file using pydub
-    sound = AudioSegment.from_ogg(path) 
-    print("Reading and chunking sound: {}".format(sound))
+    sound = AudioSegment.from_file(file = path, format = "wav")
+
+    #increase volume by 20db
+    soundLouder = sound + 20
+
+    print("Reading and chunking sound: {}".format(soundLouder))
     # split audio sound where silence is 700 miliseconds or more and get chunks
-    chunks = split_on_silence(sound,
-        # experiment with this value for your target audio file
-        min_silence_len = 500,
-        # adjust this per requirement
-        silence_thresh = sound.dBFS-14,
-        # keep the silence for 1 second, adjustable as well
-        keep_silence=500,
+    chunks = split_on_silence(soundLouder,
+        min_silence_len = 1000,
+        silence_thresh = soundLouder.dBFS-26,
+        keep_silence=100,
     )
     
     # create a directory to store the audio chunks
